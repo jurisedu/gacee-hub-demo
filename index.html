@@ -514,10 +514,8 @@
   .toggle.on{background:var(--accent)}
   .toggle i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
   .toggle.on i{left:18px}
+  .tbl td.rowhead{font-weight:700;color:var(--ink)}
 </style>
-</head>
-<body>
-
 
 <div class="app persona on" id="p-operator">
   <!-- ============ SIDEBAR ============ -->
@@ -545,6 +543,9 @@
       <div class="grp">经营分析</div>
       <a data-v="bi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg>商业 BI</a>
       <a data-v="finance"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2 0 0 1 5 0c0 1.5-2.5 1.8-2.5 3M12 16h.01"/></svg>财务结算</a>
+      <div class="grp">供应与资产</div>
+      <a data-v="vendors"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 8l2-4h14l2 4M9 12h6"/></svg>合作·采购·结算<span class="badge">4</span></a>
+      <a data-v="assets"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M8 8V5h8v3M3 13h18"/></svg>资产管理</a>
       <div class="grp">治理</div>
       <a data-v="access"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>权限与管控</a>
     </nav>
@@ -887,7 +888,7 @@
 
 <!-- ============================ MAP ============================ -->
 <section class="view" id="v-map">
-  <div class="phead"><div><h1>研学地图</h1><p>地图浏览研学产品 → 报名 → Stripe 缴费 → 电子导览</p></div><div class="sp"></div><button class="btn ghost">线路管理</button><button class="btn">+ 新建研学产品</button></div>
+  <div class="phead"><div><h1>研学地图</h1><p>地图浏览研学产品 → 报名 → Stripe 缴费 → 电子导览</p></div><div class="sp"></div><button class="btn ghost" id="routeMgr">线路管理</button><button class="btn" id="newTour">+ 新建研学产品</button></div>
   <div class="minis">
     <div class="mini"><div class="l">在售产品</div><div class="v">6</div><div class="s muted">3 主题</div></div>
     <div class="mini"><div class="l">本月报名</div><div class="v">342</div><div class="s" style="color:var(--good)">▲ 21%</div></div>
@@ -979,7 +980,7 @@
 
 <!-- ============================ EVENTS ============================ -->
 <section class="view" id="v-events">
-  <div class="phead"><div><h1>活动与直播</h1><p>活动发布报名 · 凭发布的链接进入直播（地理分流 Zoom / 腾讯会议）</p></div><div class="sp"></div><button class="btn">+ 新建活动</button></div>
+  <div class="phead"><div><h1>活动与直播</h1><p>活动发布报名 · 凭发布的链接进入直播（地理分流 Zoom / 腾讯会议）</p></div><div class="sp"></div><button class="btn ghost" id="liveConsole">直播管理</button><button class="btn" id="newEvent">+ 新建活动</button></div>
   <div class="panel"><div class="tover"><table class="tbl">
     <thead><tr><th>活动</th><th>形式</th><th>时间</th><th>报名 / 名额</th><th>直播入口</th><th>状态</th></tr></thead>
     <tbody id="eventRows"></tbody>
@@ -1247,6 +1248,118 @@
   </div>
 </section>
 
+<!-- ==================== 合作单位 · 采购 · 结算 ==================== -->
+<section class="view" id="v-vendors">
+  <div class="phead"><div><h1>合作单位 · 采购 · 结算</h1><p>供应商全生命周期 · 在线签约 · 法务审核 · 请款与分级审批 · 结算与凭证 · 全程留痕可审</p></div><div class="sp"></div><button class="btn ghost">授权矩阵</button><button class="btn ghost">导出应付账龄</button><button class="btn">+ 新增合作单位</button></div>
+  <div class="kpis">
+    <div class="kpi"><div class="lab">在册合作单位</div><div class="val">86</div><div class="dl up">▲ 5 本季</div></div>
+    <div class="kpi"><div class="lab">有效合同</div><div class="val">42</div><div class="dl fl">2 即将到期</div></div>
+    <div class="kpi"><div class="lab">待法务审核</div><div class="val">4</div><div class="dl dn">SLA 3 日</div></div>
+    <div class="kpi"><div class="lab">待付款 · 应付</div><div class="val">S$0.21M</div><div class="dl fl">7 单</div></div>
+    <div class="kpi"><div class="lab">本月已付款</div><div class="val">S$0.18M</div><div class="dl up">▲ 12%</div></div>
+    <div class="kpi"><div class="lab">年度预算执行</div><div class="val">63%</div><div class="dl up">在控</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px"><div class="ph"><h3>采购到付款（P2P）· 全流程留痕</h3><div class="sp"></div><span class="chip c-acc">合同 · 法务 · 分级授权</span></div><div class="pb">
+    <div class="flow" style="flex-wrap:wrap;row-gap:10px">
+      <div class="st"><b>立项 / 预算</b><span>成本中心</span></div><span class="ar">→</span>
+      <div class="st"><b>询价比价</b><span>≥ 3 家</span></div><span class="ar">→</span>
+      <div class="st"><b>合同起草</b><span>模板库</span></div><span class="ar">→</span>
+      <div class="st"><b>法务审核</b><span>条款 / 风险</span></div><span class="ar">→</span>
+      <div class="st"><b>在线签署</b><span>双方电子签 / 用印</span></div><span class="ar">→</span>
+      <div class="st"><b>履约验收</b><span>交付确认</span></div><span class="ar">→</span>
+      <div class="st"><b>请款</b><span>三单匹配</span></div><span class="ar">→</span>
+      <div class="st"><b>分级审批</b><span>财务→秘书长→会长</span></div><span class="ar">→</span>
+      <div class="st"><b>付款结算</b><span>银行 / Stripe</span></div><span class="ar">→</span>
+      <div class="st"><b>入账归档</b><span>凭证可审</span></div>
+    </div>
+  </div></div>
+
+  <div class="sect">合作单位台账<span class="ln"></span><span class="chip c-mut">KYC / 资质受控</span></div>
+  <div class="panel"><div class="tover"><table class="tbl">
+    <thead><tr><th>合作单位</th><th>类别</th><th>资质 / KYC</th><th>合同</th><th>本年采购额</th><th>评级</th><th>状态</th></tr></thead>
+    <tbody id="vendorRows"></tbody>
+  </table></div></div>
+
+  <div class="grid g-2" style="margin:16px 0">
+    <div class="panel"><div class="ph"><h3>合同管理</h3><div class="sp"></div><span class="chip c-warn">2 即将到期</span></div><div class="pb" style="padding:0">
+      <div class="tover"><table class="tbl"><thead><tr><th>合同编号</th><th>对方</th><th>金额</th><th>法务</th><th>签署</th></tr></thead><tbody id="contractRows"></tbody></table></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>请款与结算 · 应付</h3><div class="sp"></div><span class="chip c-dang">3 待审批</span></div><div class="pb" style="padding:0">
+      <div class="tover"><table class="tbl"><thead><tr><th>请款单</th><th>事由</th><th>金额</th><th>审批</th></tr></thead><tbody id="payRows"></tbody></table></div>
+    </div></div>
+  </div>
+
+  <div class="grid g-3">
+    <div class="panel"><div class="ph"><h3>分级授权矩阵</h3></div><div class="pb"><dl class="kv2">
+      <dt>≤ S$5k</dt><dd>部门负责人</dd>
+      <dt>≤ S$20k</dt><dd>财务负责人</dd>
+      <dt>≤ S$100k</dt><dd>秘书长</dd>
+      <dt>&gt; S$100k</dt><dd><span class="chip c-acc">会长 / 理事会</span></dd>
+    </dl></div></div>
+    <div class="panel"><div class="ph"><h3>应付账龄(AP Aging)</h3></div><div class="pb bars">
+      <div class="bar"><span>0–30 天</span><div class="track"><div class="fill" style="width:70%;background:var(--good)"></div></div><span class="num">S$150k</span></div>
+      <div class="bar"><span>31–60 天</span><div class="track"><div class="fill" style="width:26%;background:var(--gold)"></div></div><span class="num">S$46k</span></div>
+      <div class="bar"><span>61–90 天</span><div class="track"><div class="fill" style="width:10%;background:var(--info)"></div></div><span class="num">S$14k</span></div>
+      <div class="bar"><span>&gt; 90 天</span><div class="track"><div class="fill" style="width:2%;background:var(--cinnabar)"></div></div><span class="num">0</span></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>预算执行 · 成本中心</h3></div><div class="pb bars">
+      <div class="bar"><span>研学项目</span><div class="track"><div class="fill" style="width:68%;background:var(--good)"></div></div><span class="num">68%</span></div>
+      <div class="bar"><span>赛事运营</span><div class="track"><div class="fill" style="width:54%;background:var(--gold)"></div></div><span class="num">54%</span></div>
+      <div class="bar"><span>内容出版</span><div class="track"><div class="fill" style="width:40%;background:var(--info)"></div></div><span class="num">40%</span></div>
+      <div class="bar"><span>行政后勤</span><div class="track"><div class="fill" style="width:72%;background:var(--cinnabar)"></div></div><span class="num">72%</span></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ==================== 资产管理 ==================== -->
+<section class="view" id="v-assets">
+  <div class="phead"><div><h1>资产管理</h1><p>有形资产 + 无形资产 · 采购入册 → 折旧 / 摊销 → 盘点 → 处置 · 权属登记与对外授权</p></div><div class="sp"></div><button class="btn ghost">发起盘点</button><button class="btn ghost">导出资产台账</button><button class="btn">+ 资产入册</button></div>
+  <div class="kpis">
+    <div class="kpi"><div class="lab">资产净值 · 账面</div><div class="val">S$1.62M</div><div class="dl up">▲ 3%</div></div>
+    <div class="kpi"><div class="lab">有形资产</div><div class="val">S$0.94M</div><div class="dl fl">原值 S$1.2M</div></div>
+    <div class="kpi"><div class="lab">无形资产</div><div class="val">S$0.68M</div><div class="dl up">IP / 品牌</div></div>
+    <div class="kpi"><div class="lab">本年折旧摊销</div><div class="val">S$146k</div><div class="dl dn">已计提</div></div>
+    <div class="kpi"><div class="lab">待盘点</div><div class="val">12</div><div class="dl fl">Q3 计划</div></div>
+    <div class="kpi"><div class="lab">证照即将到期</div><div class="val">3</div><div class="dl fl">商标 / 域名续展</div></div>
+  </div>
+
+  <div class="sect">有形资产台账<span class="ln"></span><span class="chip c-mut">固定资产 · 二维码标签</span></div>
+  <div class="panel"><div class="tover"><table class="tbl">
+    <thead><tr><th>资产编号</th><th>名称</th><th>类别</th><th>原值</th><th>累计折旧</th><th>净值</th><th>保管 / 位置</th><th>状态</th></tr></thead>
+    <tbody id="tangibleRows"></tbody>
+  </table></div></div>
+
+  <div class="sect" style="margin-top:16px">无形资产台账<span class="ln"></span><span class="chip c-acc">权属 · 授权收入</span></div>
+  <div class="panel"><div class="tover"><table class="tbl">
+    <thead><tr><th>名称</th><th>类别</th><th>权属</th><th>取得成本</th><th>摊销 / 年</th><th>有效期 / 续展</th><th>对外授权</th></tr></thead>
+    <tbody id="intangibleRows"></tbody>
+  </table></div></div>
+
+  <div class="grid g-3" style="margin-top:16px">
+    <div class="panel"><div class="ph"><h3>资产结构</h3></div><div class="pb bars">
+      <div class="bar"><span>研学器材</span><div class="track"><div class="fill" style="width:46%;background:var(--good)"></div></div><span class="num">S$0.3M</span></div>
+      <div class="bar"><span>办公 / 会务</span><div class="track"><div class="fill" style="width:30%;background:var(--info)"></div></div><span class="num">S$0.2M</span></div>
+      <div class="bar"><span>图书实物</span><div class="track"><div class="fill" style="width:20%;background:var(--gold)"></div></div><span class="num">S$0.13M</span></div>
+      <div class="bar"><span>无形 IP / 品牌</span><div class="track"><div class="fill" style="width:70%;background:var(--accent)"></div></div><span class="num">S$0.68M</span></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>折旧 / 摊销趋势</h3><div class="sp"></div><span class="chip c-acc">近 6 月</span></div><div class="pb">
+      <svg width="100%" height="150" viewBox="0 0 640 150" preserveAspectRatio="none">
+        <line class="grln" x1="0" y1="50" x2="640" y2="50"/><line class="grln" x1="0" y1="100" x2="640" y2="100"/>
+        <polyline fill="none" stroke="var(--gold)" stroke-width="2.5" points="0,120 128,116 256,112 384,104 512,100 640,92"/>
+        <polyline fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" points="0,132 128,128 256,126 384,120 512,116 640,110"/>
+      </svg>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:12px" class="muted"><span><span class="dot" style="background:var(--gold)"></span> 折旧</span><span><span class="dot" style="background:var(--accent)"></span> 摊销</span></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>证照续展日历</h3></div><div class="pb"><dl class="kv2">
+      <dt>gacee.org 域名</dt><dd><span class="chip c-warn">2026-11 续费</span></dd>
+      <dt>GACEE 商标</dt><dd><span class="chip c-warn">2027-03 续展</span></dd>
+      <dt>平台软著</dt><dd><span class="chip c-good">长期有效</span></dd>
+      <dt>课程 IP 登记</dt><dd><span class="chip c-good">已登记</span></dd>
+    </dl></div></div>
+  </div>
+</section>
+
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
@@ -1487,6 +1600,8 @@
         <dt>收款账户</dt><dd>协会名下 · Stripe</dd>
         <dt>数据驻留</dt><dd>新加坡</dd>
         <dt>审计</dt><dd><span class="chip c-good">全程留痕</span></dd>
+        <dt>资产净值</dt><dd class="num">S$1.62M</dd>
+        <dt>待会长签批</dt><dd><span class="chip c-warn">S$150k · 1 单</span></dd>
       </dl></div></div>
       <div class="panel"><div class="ph"><h3>官方合作</h3></div><div class="pb tight">
         <div class="q"><div class="qt"><b>安徽出版集团</b><span>研学 · 出版</span></div><span class="chip c-good">合作中</span></div>
@@ -1681,7 +1796,7 @@
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
   /* ---- nav ---- */
-  var titles={dash:"概览看板",content:"内容中枢",projects:"项目管理",contest:"赛事与评审",publish:"出版 / 图书",resources:"资源与对接",map:"研学地图",events:"活动与直播",certs:"证书中枢",members:"会员与机构",charity:"公益与捐赠",access:"权限与管控",bi:"商业 BI",finance:"财务结算"};
+  var titles={dash:"概览看板",content:"内容中枢",projects:"项目管理",contest:"赛事与评审",publish:"出版 / 图书",resources:"资源与对接",map:"研学地图",events:"活动与直播",certs:"证书中枢",members:"会员与机构",charity:"公益与捐赠",access:"权限与管控",bi:"商业 BI",finance:"财务结算",vendors:"合作·采购·结算",assets:"资产管理"};
   $$('#nav a').forEach(function(a){a.addEventListener('click',function(){
     var v=a.dataset.v;
     $$('#nav a').forEach(function(x){x.classList.remove('on')});a.classList.add('on');
@@ -1959,7 +2074,10 @@
     "公益透明台账 · EduLink-Africa":"Transparency ledger · EduLink-Africa","需求（受助方）":"Needs","供给（捐赠方）":"Offers","角色与职能授权":"Roles & permissions","审计留痕":"Audit log","资源库":"Resource library","对接请求队列":"Match requests","研学产品":"Tours","报名与缴费":"Enroll & pay","行程路线 · 6 天 5 晚":"Itinerary · 6D5N","直播分流与回放 · 杜老师公开课（9/17）":"Live routing & replay","入口地理分流":"Geo routing","报名概况":"Registrations","回放与留痕":"Replay & logs",
     "登录平台":"Sign in","连接世界，启迪未来":"Connect the world, inspire the future","登录":"Sign in","邮箱":"Email","密码":"Password","邮箱验证码":"Email code","获取验证码":"Send code","校长 / 机构":"Principal / Org","个人会员":"Member","协会运营":"Operations","理事 / 会长":"Council / President","覆盖国家":"Countries",
     "首页":"Home","资源广场":"Marketplace","发布资源":"Publish","活动报名":"Enroll","我的证书":"My certs","我的对接":"My matches","欢迎，李校长":"Welcome, Principal Li","全部主题":"All themes","全部地区":"All regions","全部":"All",
-    "会长视角 · 全局纵览":"President · Global overview","项目组合健康度":"Portfolio health","待会长审批":"Awaiting approval","影响力 · 地域":"Reach · region","财务与合规":"Finance & compliance","官方合作":"Official partners"
+    "会长视角 · 全局纵览":"President · Global overview","项目组合健康度":"Portfolio health","待会长审批":"Awaiting approval","影响力 · 地域":"Reach · region","财务与合规":"Finance & compliance","官方合作":"Official partners",
+    "供应与资产":"SUPPLY & ASSETS","合作·采购·结算":"Vendors · P2P","合作单位 · 采购 · 结算":"Vendors · Procurement · Settlement","资产管理":"Assets",
+    "采购到付款（P2P）· 全流程留痕":"Procure-to-Pay (P2P) · audit trail","合作单位台账":"Vendor ledger","合同管理":"Contracts","请款与结算（应付）":"Payables","分级授权矩阵":"Authority matrix","应付账龄(AP Aging)":"AP aging","预算执行 · 成本中心":"Budget vs actual · cost centre",
+    "有形资产台账":"Tangible assets","无形资产台账":"Intangible assets","资产结构":"Asset mix","折旧 / 摊销趋势":"Depreciation & amortization","证照续展日历":"Renewal calendar"
   };
   var EN=D, ZH={}; for(var k in D){ if(!(D[k] in ZH)) ZH[D[k]]=k; }
   var lang='zh';
@@ -2359,6 +2477,129 @@
     var re=$('#scRe'),sb=$('#scSb');if(re)re.textContent=(parseInt(re.textContent.replace(/,/g,''))+Math.floor(Math.random()*3)).toLocaleString();if(sb&&Math.random()>0.5)sb.textContent=(parseInt(sb.textContent.replace(/,/g,''))+1).toLocaleString();
     feed.unshift([Math.random()>0.6?'完成评审':'提交作品',its[Math.floor(Math.random()*its.length)]+' · '+nms[Math.floor(Math.random()*nms.length)],'刚刚']);feed=feed.slice(0,6);renderFeed();
   },3000);
+
+  /* ===== 研学：线路管理 / 新建产品；活动：新建 / 直播管理 ===== */
+  var moreTO={'+ 新建线路':'新建线路（演示）','+ 新增站点':'已添加站点','编辑电子导览':'打开电子导览编辑器','+ 从线路库添加站点':'已从线路库添加站点','发布产品':'研学产品已发布 · 上线研学地图','存草稿':'已存草稿','AI 生成物料':'JE Agent 正在生成海报/文案/视频…','发布活动':'活动已发布 · 报名开启','复制主持人链接':'已复制主持人链接','回填回放':'已保存回放链接','导出报名 CSV':'报名名单已导出','编辑':'打开编辑','+ 新建线路 ':'新建线路'};
+  for(var kk in moreTO){TO[kk]=moreTO[kk];}
+
+  var rm=$('#routeMgr');if(rm)rm.addEventListener('click',function(){
+    var routes=[['西安 · 文脉','陕西','5','150','运营中','c-good'],['徽州 · 游学','安徽','6','200','运营中','c-good'],['宏村 · 写生','安徽','3','80','运营中','c-good'],['潮汕 · 寻根','广东','4','—','筹备中','c-warn'],['黄山 · 诗词','安徽','4','120','运营中','c-good']];
+    openDrawer('研学线路管理',
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span class="muted" style="font-size:12.5px">共 '+routes.length+' 条线路 · 14 合作基地</span><button class="btn" style="padding:6px 12px">+ 新建线路</button></div>'+
+      '<div class="tover"><table class="tbl"><thead><tr><th>线路</th><th>地区</th><th>站点</th><th>容量</th><th>状态</th><th></th></tr></thead><tbody>'+
+      routes.map(function(r){return '<tr class="clk"><td><b>'+r[0]+'</b></td><td class="t2">'+r[1]+'</td><td class="num">'+r[2]+'</td><td class="num">'+r[3]+'</td><td><span class="chip '+r[5]+'">'+r[4]+'</span></td><td class="t2">编辑</td></tr>'}).join('')+
+      '</tbody></table></div>'+
+      '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 10px">徽州 · 游学 · 站点</h3>'+
+      '<div class="stepper"><div class="s done"><div class="dot">1</div><div><b>合肥 · 开营</b><span>徽文化导论 · 出版集团文化馆</span></div></div><div class="s done"><div class="dot">2</div><div><b>徽州古城</b><span>牌坊/楹联 · 电子导览 8 处</span></div></div><div class="s done"><div class="dot">3</div><div><b>宏村</b><span>水墨写生 · 中文写作工作坊</span></div></div><div class="s"><div class="dot">4</div><div><b>黄山</b><span>诗词地图 · 语音导览</span></div></div><div class="s"><div class="dot">5</div><div><b>结营 · 颁证</b><span>研学结业证书</span></div></div></div>'+
+      '<div style="display:flex;gap:10px;margin-top:8px"><button class="btn" style="flex:1">+ 新增站点</button><button class="btn ghost">编辑电子导览</button></div>');
+  });
+
+  var nt=$('#newTour');if(nt)nt.addEventListener('click',function(){
+    openDrawer('新建研学产品',
+      '<div class="drev"><div class="h">① 基本信息<span class="ln"></span></div></div>'+
+      '<div class="field"><label>产品标题</label><div class="inp"><input placeholder="如：行走中国 · 安徽游学（第27期）"></div></div>'+
+      '<div class="split"><div class="field"><label>主题</label><div class="inp"><input value="徽文化"></div></div><div class="field"><label>地区</label><div class="inp"><input value="安徽"></div></div></div>'+
+      '<div class="field"><label>关联线路</label><div class="inp"><input value="徽州 · 游学" readonly></div></div>'+
+      '<div class="field"><label>封面</label><div class="biglink"><span>＋ 上传封面图（示意）</span></div></div>'+
+      '<div class="drev"><div class="h">② 路线站点<span class="ln"></span></div></div>'+
+      '<div class="stepper"><div class="s done"><div class="dot">1</div><div><b>合肥 · 开营</b></div></div><div class="s done"><div class="dot">2</div><div><b>徽州古城</b></div></div><div class="s done"><div class="dot">3</div><div><b>宏村</b></div></div></div>'+
+      '<button class="btn ghost" style="width:100%;justify-content:center;margin-bottom:4px">+ 从线路库添加站点</button>'+
+      '<div class="drev"><div class="h">③ 四版本分层<span class="ln"></span><span class="chip c-acc">每地点四套</span></div></div>'+
+      '<div class="tover"><table class="tbl"><thead><tr><th>版本</th><th>价格(S$)</th><th>名额</th><th>主题/权益</th></tr></thead><tbody>'+
+      '<tr><td class="rowhead">高奢版</td><td><input value="12800" style="'+IS+';width:70px"></td><td><input value="20" style="'+IS+';width:48px"></td><td class="t2">商务考察·产业对接·政企合作</td></tr>'+
+      '<tr><td class="rowhead">校长版</td><td><input value="5800" style="'+IS+';width:70px"></td><td><input value="40" style="'+IS+';width:48px"></td><td class="t2">高校考察·教育交流·校际合作</td></tr>'+
+      '<tr><td class="rowhead">有志青年版</td><td><input value="2600" style="'+IS+';width:70px"></td><td><input value="60" style="'+IS+';width:48px"></td><td class="t2">升学规划·企业探访·职业体验</td></tr>'+
+      '<tr><td class="rowhead">大众版</td><td><input value="1880" style="'+IS+';width:70px"></td><td><input value="80" style="'+IS+';width:48px"></td><td class="t2">历史文化·非遗体验·名校参访</td></tr>'+
+      '</tbody></table></div>'+
+      '<div class="drev"><div class="h">④ 报名与发布<span class="ln"></span></div></div>'+
+      '<div class="split"><div class="field"><label>报名截止</label><div class="inp"><input type="date" value="2026-11-10"></div></div><div class="field"><label>收款</label><div class="inp"><input value="Stripe · 协会账户" readonly></div></div></div>'+
+      '<div style="display:flex;gap:10px;margin-top:6px"><button class="btn" style="flex:1">发布产品</button><button class="btn ghost">存草稿</button><button class="btn ghost">AI 生成物料</button></div>');
+  });
+
+  var ne=$('#newEvent');if(ne)ne.addEventListener('click',function(){
+    openDrawer('新建活动',
+      '<div class="field"><label>活动名称</label><div class="inp"><input placeholder="如：杜老师公开课 · 幼儿园 × 澳洲分校"></div></div>'+
+      '<div class="field"><label>形式</label><div class="seg"><button class="on">线上互动课</button><button>直播</button><button>论坛</button><button>读书会</button></div></div>'+
+      '<div class="split"><div class="field"><label>时间</label><div class="inp"><input type="datetime-local" value="2026-09-17T16:00"></div></div><div class="field"><label>名额</label><div class="inp"><input value="200"></div></div></div>'+
+      '<div class="field"><label>直播工具（地理分流）</label><div class="seg"><button class="on">Zoom + 腾讯会议</button><button>仅 Zoom</button><button>仅腾讯会议</button></div></div>'+
+      '<div class="field"><label>报名设置</label><div style="font-size:13px;color:var(--ink-soft);line-height:1.9">☑ 必须勾选「录制知悉」　☑ 生成专属进入链接　☑ 允许留言提问</div></div>'+
+      '<div style="display:flex;gap:10px;margin-top:8px"><button class="btn" style="flex:1">发布活动</button><button class="btn ghost">存草稿</button></div>');
+  });
+
+  var lc=$('#liveConsole');if(lc)lc.addEventListener('click',function(){
+    openDrawer('直播管理 · 杜老师公开课（9/17）',
+      '<dl class="kv2"><dt>形式</dt><dd>线上互动课</dd><dt>时间</dt><dd>09/17 16:00</dd><dt>报名</dt><dd>128 / 200</dd></dl>'+
+      '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">入口地理分流</h3>'+
+      '<div class="biglink" style="margin-bottom:8px"><div class="av2" style="background:var(--info)">腾</div><div style="flex:1"><b style="font-size:13px">腾讯会议</b><div class="muted" style="font-size:12px">中国大陆访客 · 自动匹配</div></div><span class="chip c-info">CN</span></div>'+
+      '<div class="biglink"><div class="av2" style="background:var(--accent)">Zm</div><div style="flex:1"><b style="font-size:13px">Zoom</b><div class="muted" style="font-size:12px">海外访客 · 默认</div></div><span class="chip c-acc">Intl</span></div>'+
+      '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">进行中</h3>'+
+      '<div class="bars"><div class="bar"><span>已进入</span><div class="track"><div class="fill" style="width:40%;background:var(--good)"></div></div><span class="num">—</span></div><div class="bar"><span>留言提问</span><div class="track"><div class="fill" style="width:22%;background:var(--gold)"></div></div><span class="num">17</span></div></div>'+
+      '<div style="display:flex;gap:10px;margin-top:12px"><button class="btn" style="flex:1">复制主持人链接</button><button class="btn ghost">回填回放</button><button class="btn ghost">导出报名 CSV</button></div>');
+  });
+
+  /* ===== 合作·采购·结算 + 资产管理 ===== */
+  Object.assign(TO,{'+ 新增合作单位':'新增合作单位（演示）','授权矩阵':'打开分级授权矩阵','导出应付账龄':'应付账龄已导出（CSV）','发起法务审核':'已提交法务审核 · SLA 3 日','用印 / 电子签':'已用印 · 合同生效','发起请款':'请款单已提交 · 进入分级审批','通过':'已通过 · 进入下一审批级','退回补充':'已退回 · 已通知经办','确认付款':'付款已发起 · 银行放款','下载合同 PDF':'合同 PDF 已下载','+ 资产入册':'资产入册（演示）','发起盘点':'盘点任务已下发','导出资产台账':'资产台账已导出（CSV）','打印资产标签':'资产二维码标签已生成','登记折旧':'折旧已计提','发起处置':'处置流程已发起 · 待审批','新增授权许可':'授权许可已登记','续展提醒':'已设置到期续展提醒'});
+  function avn(t,c){return '<span class="av2" style="background:'+c+'">'+t+'</span>';}
+  function pct(a,b){a=parseFloat((''+a).replace(/[^0-9.]/g,''));b=parseFloat((''+b).replace(/[^0-9.]/g,''));return b?Math.round(a/b*100):0;}
+
+  var vendors=[['宏村研学基地','研学基地','#237A54','已认证','c-good',3,'S$180k','A','合作中','c-good'],['中青旅遨游 · 研学事业部','旅行社 · 研学地接','#C0603A','已认证','c-good',4,'S$260k','A','合作中','c-good'],['中国国旅 · 华东 (CITS)','旅行社 · 出入境','#2E6DA4','已认证','c-good',3,'S$210k','A','合作中','c-good'],['携程研学 (Trip.com)','旅行社 · 在线预订','#1F6FB2','已认证','c-good',2,'S$150k','B','合作中','c-good'],['春秋国旅 · 华东','旅行社 · 机票地接','#7A9A2E','待补资质','c-warn',1,'S$60k','B','审核中','c-warn'],['金陵文化印务','印刷出版','#9A7615','已认证','c-good',2,'S$92k','A','合作中','c-good'],['星野研学物流','交通物流','#1C6C93','待补资质','c-warn',1,'S$46k','B','审核中','c-warn'],['沪上科创评审专家库','讲师劳务','#5b3fa8','已认证','c-good',4,'S$120k','A','合作中','c-good'],['狮城会展服务','场地会展','#B23A3A','已认证','c-good',2,'S$68k','B','合作中','c-good'],['云枢科技 · 平台运维','技术服务','#1F3AA8','已认证','c-good',1,'S$150k','A','合作中','c-good']];
+  var vr=$('#vendorRows');
+  if(vr){vr.innerHTML=vendors.map(function(v,i){return '<tr class="clk" data-i="'+i+'"><td>'+avn(v[0].slice(0,1),v[2])+'<b style="margin-left:8px">'+v[0]+'</b></td><td class="t2">'+v[1]+'</td><td><span class="chip '+v[4]+'">'+v[3]+'</span></td><td class="num">'+v[5]+'</td><td class="num">'+v[6]+'</td><td><b>'+v[7]+'</b></td><td><span class="chip '+v[9]+'">'+v[8]+'</span></td></tr>';}).join('');
+    $$('#vendorRows tr').forEach(function(tr){tr.addEventListener('click',function(){var v=vendors[tr.dataset.i];
+      openDrawer('合作单位 · '+v[0],
+        '<dl class="kv2"><dt>类别</dt><dd>'+v[1]+'</dd><dt>资质 / KYC</dt><dd><span class="chip '+v[4]+'">'+v[3]+'</span></dd><dt>评级</dt><dd><b>'+v[7]+'</b> 级</dd><dt>本年采购额</dt><dd class="num">'+v[6]+'</dd><dt>有效合同</dt><dd>'+v[5]+' 份</dd><dt>银行账户</dt><dd>DBS ****（受控）</dd></dl>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">资质与合规（受控）</h3>'+
+        '<div class="bars"><div class="bar"><span>注册 / 营业执照</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">✓</span></div><div class="bar"><span>资质证明</span><div class="track"><div class="fill" style="width:'+(v[3]==='已认证'?100:60)+'%;background:'+(v[3]==='已认证'?'var(--good)':'var(--gold)')+'"></div></div><span class="num">'+(v[3]==='已认证'?'✓':'待补')+'</span></div><div class="bar"><span>银行信息核验</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">✓</span></div><div class="bar"><span>反舞弊 / 黑名单筛查</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">通过</span></div></div>'+
+        '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">发起请款</button><button class="btn ghost">下载合同 PDF</button></div>');
+    });});}
+
+  var contracts=[['HT-2026-018','宏村研学基地','S$180k','已通过','c-good','双方已签','c-good','采购 / 研学','2027-06-30'],['HT-2026-024','中青旅遨游 · 研学','S$260k','已通过','c-good','双方已签','c-good','研学地接 / 框架','2027-09-30'],['HT-2026-023','中国国旅 · 华东','S$210k','审核中','c-warn','待签','c-mut','研学地接 / 出入境','2027-08-31'],['HT-2026-021','星野研学物流','S$46k','审核中','c-warn','待签','c-mut','服务','2027-03-31'],['HT-2026-014','金陵文化印务','S$92k','已通过','c-good','待对方签','c-info','采购 / 印刷','2026-10-15'],['HT-2026-009','云枢科技','S$150k','已通过','c-good','双方已签','c-good','技术服务','2026-11-30']];
+  var cr=$('#contractRows');
+  if(cr){cr.innerHTML=contracts.map(function(c,i){return '<tr class="clk" data-i="'+i+'"><td><b>'+c[0]+'</b></td><td class="t2">'+c[1]+'</td><td class="num">'+c[2]+'</td><td><span class="chip '+c[4]+'">'+c[3]+'</span></td><td><span class="chip '+c[6]+'">'+c[5]+'</span></td></tr>';}).join('');
+    $$('#contractRows tr').forEach(function(tr){tr.addEventListener('click',function(){var c=contracts[tr.dataset.i];var L=c[3]==='已通过',S=c[5]==='双方已签';
+      openDrawer('合同 · '+c[0],
+        '<dl class="kv2"><dt>对方</dt><dd>'+c[1]+'</dd><dt>类型</dt><dd>'+c[7]+'</dd><dt>合同金额</dt><dd class="num">'+c[2]+'</dd><dt>期限至</dt><dd>'+c[8]+'</dd></dl>'+
+        '<hr class="hr"><div class="stepper"><div class="s done"><div class="dot">✓</div><div><b>模板起草</b><span>合同模板库 · 标准条款带入</span></div></div><div class="s '+(L?'done':'now')+'"><div class="dot">'+(L?'✓':'2')+'</div><div><b>法务审核</b><span>条款 / 合规 / 风险标注 · 会签</span></div></div><div class="s '+(S?'done':(L?'now':''))+'"><div class="dot">'+(S?'✓':'3')+'</div><div><b>在线签署</b><span>协会法人 + 对方授权代表 · 电子签 / 用印</span></div></div><div class="s'+(S?' done':'')+'"><div class="dot">'+(S?'✓':'4')+'</div><div><b>归档生效</b><span>版本留痕 · 到期提醒</span></div></div></div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">法务审核意见</h3>'+
+        '<div class="bars"><div class="bar"><span>付款与结算条款</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">通过</span></div><div class="bar"><span>违约与赔偿</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">通过</span></div><div class="bar"><span>知识产权归属</span><div class="track"><div class="fill" style="width:'+(L?100:70)+'%;background:'+(L?'var(--good)':'var(--gold)')+'"></div></div><span class="num">'+(L?'通过':'建议修订')+'</span></div><div class="bar"><span>争议解决 / 管辖</span><div class="track"><div class="fill" style="width:100%;background:var(--good)"></div></div><span class="num">新加坡</span></div></div>'+
+        '<div style="display:flex;gap:12px;margin-top:14px"><div style="flex:1;border:1px dashed var(--line);border-radius:8px;padding:12px;text-align:center"><div class="muted" style="font-size:12px">协会（甲方）</div><div style="font-family:var(--serif);font-size:20px;color:var(--accent);margin:6px 0">GACEE</div><span class="chip '+(S?'c-good':'c-mut')+'">'+(S?'已用印':'待用印')+'</span></div><div style="flex:1;border:1px dashed var(--line);border-radius:8px;padding:12px;text-align:center"><div class="muted" style="font-size:12px">'+c[1]+'（乙方）</div><div style="font-family:var(--serif);font-size:20px;color:var(--gold-deep,#8A6A1C);margin:6px 0">'+c[1].slice(0,2)+'</div><span class="chip '+(S?'c-good':'c-mut')+'">'+(S?'已签署':'待签署')+'</span></div></div>'+
+        '<div style="display:flex;gap:10px;margin-top:14px">'+(L?'<button class="btn" style="flex:1">用印 / 电子签</button>':'<button class="btn" style="flex:1">发起法务审核</button>')+'<button class="btn ghost">下载合同 PDF</button></div>');
+    });});}
+
+  var pays=[['FK-2026-051','宏村基地 · 研学履约款','S$90k','秘书长审批','c-warn'],['FK-2026-049','金陵印务 · 作品集印刷','S$32k','财务审批','c-info'],['FK-2026-047','云枢科技 · 平台年费','S$150k','会长 / 理事会','c-dang'],['FK-2026-045','会展服务 · 论坛场地','S$8k','部门审批','c-mut']];
+  var pyr=$('#payRows');
+  if(pyr){pyr.innerHTML=pays.map(function(p,i){return '<tr class="clk" data-i="'+i+'"><td><b>'+p[0]+'</b></td><td class="t2">'+p[1]+'</td><td class="num">'+p[2]+'</td><td><span class="chip '+p[4]+'">'+p[3]+'</span></td></tr>';}).join('');
+    $$('#payRows tr').forEach(function(tr){tr.addEventListener('click',function(){var p=pays[tr.dataset.i];var big=p[3]==='会长 / 理事会',sg=p[3]==='秘书长审批'||big;
+      openDrawer('请款单 · '+p[0],
+        '<dl class="kv2"><dt>事由</dt><dd>'+p[1]+'</dd><dt>金额</dt><dd class="num">'+p[2]+'</dd><dt>预算科目</dt><dd>研学项目 · 成本中心</dd><dt>发票 / 验收</dt><dd><span class="chip c-good">已核验 · 三单匹配</span></dd><dt>收款方</dt><dd>'+p[1].split(' · ')[0]+'（受控）</dd></dl>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">分级授权审批链</h3>'+
+        '<div class="stepper"><div class="s done"><div class="dot">✓</div><div><b>经办提交</b><span>林秘书 · 附合同 / 发票 / 验收单</span></div></div><div class="s done"><div class="dot">✓</div><div><b>部门负责人</b><span>≤ S$5k 权限 · 已复核</span></div></div><div class="s done"><div class="dot">✓</div><div><b>财务负责人</b><span>≤ S$20k · 预算 / 账期核对</span></div></div><div class="s '+(sg?'done':'now')+'"><div class="dot">'+(sg?'✓':'4')+'</div><div><b>秘书长</b><span>≤ S$100k</span></div></div><div class="s '+(big?'now':'')+'"><div class="dot">5</div><div><b>会长 / 理事会</b><span>&gt; S$100k · 授权签批</span></div></div></div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">付款与结算</h3><dl class="kv2"><dt>付款方式</dt><dd>银行转账 / Stripe Payout</dd><dt>账期</dt><dd>验收后 T+7</dd><dt>凭证</dt><dd>付款后自动归档 · 全程可审</dd></dl>'+
+        '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">通过</button><button class="btn ghost">退回补充</button><button class="btn ghost">确认付款</button></div>');
+    });});}
+
+  var tang=[['GD-0001','VR 研学教学一体机 ×20','研学器材','#237A54','S$120k','S$48k','S$72k','秘书处 · 教学部','在用','c-good'],['GD-0007','会议音视频系统','办公设备','#1C6C93','S$60k','S$24k','S$36k','会务室','在用','c-good'],['GD-0012','便携拍摄 / 直播设备','内容制作','#9A7615','S$28k','S$14k','S$14k','内容部','在用','c-good'],['GD-0020','《行走中国》馆藏图书 1,200 册','图书实物','#B23A3A','S$36k','S$7k','S$29k','协会图书馆','在用','c-good'],['GD-0031','研学营地帐篷 / 装备','研学器材','#5b3fa8','S$18k','S$9k','S$9k','仓库 · 待盘点','闲置','c-warn']];
+  var tgr=$('#tangibleRows');
+  if(tgr){tgr.innerHTML=tang.map(function(a,i){return '<tr class="clk" data-i="'+i+'"><td><b>'+a[0]+'</b></td><td>'+avn('物',a[3])+'<span style="margin-left:8px">'+a[1]+'</span></td><td class="t2">'+a[2]+'</td><td class="num">'+a[4]+'</td><td class="num">'+a[5]+'</td><td class="num"><b>'+a[6]+'</b></td><td class="t2">'+a[7]+'</td><td><span class="chip '+a[9]+'">'+a[8]+'</span></td></tr>';}).join('');
+    $$('#tangibleRows tr').forEach(function(tr){tr.addEventListener('click',function(){var a=tang[tr.dataset.i];
+      openDrawer('资产 · '+a[1],
+        '<dl class="kv2"><dt>资产编号</dt><dd>'+a[0]+'</dd><dt>类别</dt><dd>'+a[2]+'</dd><dt>原值</dt><dd class="num">'+a[4]+'</dd><dt>累计折旧</dt><dd class="num">'+a[5]+'</dd><dt>账面净值</dt><dd class="num"><b>'+a[6]+'</b></dd><dt>保管 / 位置</dt><dd>'+a[7]+'</dd><dt>状态</dt><dd><span class="chip '+a[9]+'">'+a[8]+'</span></dd></dl>'+
+        '<hr class="hr"><div style="display:flex;gap:14px;align-items:center"><div style="width:76px;height:76px;border-radius:8px;background:var(--panel-2);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;color:var(--ink-soft);text-align:center;line-height:1.3">资产<br>二维码</div><div class="muted" style="font-size:12.5px;line-height:1.7">扫码可查：取得日期、折旧方式（直线法 / 5 年）、保管人、盘点记录与维保历史。</div></div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">折旧进度</h3><div class="bars"><div class="bar"><span>已折旧</span><div class="track"><div class="fill" style="width:'+pct(a[5],a[4])+'%;background:var(--gold)"></div></div><span class="num">'+a[5]+' / '+a[4]+'</span></div></div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">盘点记录</h3><div class="tover"><table class="tbl"><thead><tr><th>日期</th><th>盘点人</th><th>结果</th></tr></thead><tbody><tr><td>2026-06-30</td><td>资产管理员</td><td><span class="chip c-good">账实相符</span></td></tr></tbody></table></div>'+
+        '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">打印资产标签</button><button class="btn ghost">登记折旧</button><button class="btn ghost">发起处置</button></div>');
+    });});}
+
+  var intg=[['GACEE 商标（多类）','商标','协会自有','S$40k','S$8k','2027-03 续展','—','c-warn','对内'],['「行走中国」课程 IP','课程 / 著作权','协会自有','S$120k','S$24k','长期','校区授权 3 家','c-good','许可收入'],['协会平台软件著作权','软件著作权','协会自有','S$300k','S$60k','长期','—','c-good','对内'],['gacee.org 及子域名','域名','协会自有','S$3k','—','2026-11 续费','—','c-warn','对内'],['证书体系与验真库','数据资产 / 体系','协会自有','S$80k','S$16k','长期','对合作校授权','c-good','许可收入'],['研学电子导览内容库','著作权 / 数据','协会自有','S$60k','S$12k','长期','—','c-good','对内']];
+  var igr=$('#intangibleRows');
+  if(igr){igr.innerHTML=intg.map(function(a,i){return '<tr class="clk" data-i="'+i+'"><td><b>'+a[0]+'</b></td><td class="t2">'+a[1]+'</td><td class="t2">'+a[2]+'</td><td class="num">'+a[3]+'</td><td class="num">'+a[4]+'</td><td><span class="chip '+a[7]+'">'+a[5]+'</span></td><td class="t2">'+(a[6]==='—'?'<span class="muted">—</span>':'<span class="chip c-acc">'+a[6]+'</span>')+'</td></tr>';}).join('');
+    $$('#intangibleRows tr').forEach(function(tr){tr.addEventListener('click',function(){var a=intg[tr.dataset.i];
+      openDrawer('无形资产 · '+a[0],
+        '<dl class="kv2"><dt>类别</dt><dd>'+a[1]+'</dd><dt>权属</dt><dd>'+a[2]+' <span class="chip c-good">已登记</span></dd><dt>取得成本</dt><dd class="num">'+a[3]+'</dd><dt>年摊销</dt><dd class="num">'+a[4]+'</dd><dt>有效期 / 续展</dt><dd><span class="chip '+a[7]+'">'+a[5]+'</span></dd><dt>对外授权</dt><dd>'+(a[6]==='—'?'<span class="muted">暂无</span>':a[6])+'</dd></dl>'+
+        (a[8]==='许可收入'?'<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">对外授权许可（收入）</h3><div class="tover"><table class="tbl"><thead><tr><th>被授权方</th><th>范围</th><th>年费</th><th>状态</th></tr></thead><tbody><tr><td>合作校 A</td><td>非独家 · 教学使用</td><td class="num">S$12k</td><td><span class="chip c-good">生效</span></td></tr><tr><td>合作校 B</td><td>非独家 · 教学使用</td><td class="num">S$12k</td><td><span class="chip c-good">生效</span></td></tr></tbody></table></div>':'')+
+        (a[7]==='c-warn'?'<hr class="hr"><div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--ink);line-height:1.6"><b>续展提醒：</b>'+a[5]+'，建议提前 60 日办理续展 / 续费，避免权利中断。</div>':'')+
+        '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">新增授权许可</button><button class="btn ghost">续展提醒</button></div>');
+    });});}
 })();
 </script>
 
