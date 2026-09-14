@@ -515,6 +515,30 @@
   .toggle i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
   .toggle.on i{left:18px}
   .tbl td.rowhead{font-weight:700;color:var(--ink)}
+  /* ===== 会员卡 + 等级阶梯 ===== */
+  .memcard{border-radius:16px;overflow:hidden;color:#fff;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;
+    background:radial-gradient(680px 300px at 88% -30%,rgba(184,145,47,.5),transparent),linear-gradient(125deg,#1F3AA8,#0d1b46 72%)}
+  .mc-top{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.14)}
+  .mc-top .mc-seal{width:38px;height:38px;border-radius:50%;background:#fff url("seal.png") center/cover;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+  .mc-top b{font-family:var(--serif);font-size:13.5px;display:block;line-height:1.25;color:#fff}
+  .mc-top span{font-size:8px;letter-spacing:.06em;color:#c9d3f0}
+  .mc-badge{margin-left:auto;background:linear-gradient(135deg,#e8c86a,#b8912f);color:#3a2c07;font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 12px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  .mc-body{padding:16px 18px 12px}
+  .mc-name{font-family:var(--serif);font-size:22px;font-weight:700}
+  .mc-sub{font-size:12.5px;color:#c9d3f0;margin-top:2px}
+  .mc-row{display:flex;gap:22px;margin-top:15px;flex-wrap:wrap}
+  .mc-row label{font-size:10px;color:#a9b6df;display:block;letter-spacing:.03em;margin-bottom:2px}
+  .mc-row b{font-size:13px;font-variant-numeric:tabular-nums}
+  .mc-foot{margin-top:auto;display:flex;gap:12px;align-items:center;padding:13px 18px;background:rgba(0,0,0,.2)}
+  .mc-verify{font-size:11px;color:#c9d3f0}.mc-verify .chip{margin-bottom:4px}
+  .ladder .lv{display:grid;grid-template-columns:24px 1fr auto;gap:11px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .ladder .lv:last-child{border-bottom:0}
+  .ladder .lv .dot{width:22px;height:22px;border-radius:50%;background:var(--panel-3);color:var(--ink-faint);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  .ladder .lv.on .dot{background:var(--accent);color:#fff}
+  .ladder .lv.done .dot{background:var(--good);color:#fff}
+  .ladder .lv b{font-size:13px}.ladder .lv span{font-size:11.5px;color:var(--ink-faint);display:block}
+  .ladder .lv.on b{color:var(--accent)}
+  .ladder .lv .fee{font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
 </style>
 
 <div class="app persona on" id="p-operator">
@@ -1085,6 +1109,30 @@
     <thead><tr><th>名称</th><th>类型</th><th>地区</th><th>认证</th><th>资源</th><th>加入</th></tr></thead>
     <tbody id="memberRows"></tbody>
   </table></div></div>
+
+  <div class="sect">会员等级与权益<span class="ln"></span><span class="chip c-acc">6 级 · 可配置</span></div>
+  <div class="panel"><div class="tover"><table class="tbl">
+    <thead><tr><th>等级</th><th>年度会费</th><th>会员数</th><th>核心权益</th><th>治理席位</th><th></th></tr></thead>
+    <tbody id="tierRows"></tbody>
+  </table></div></div>
+
+  <div class="grid g-3" style="margin-top:16px">
+    <div class="panel"><div class="ph"><h3>会员构成</h3></div><div class="pb bars">
+      <div class="bar"><span>个人会员</span><div class="track"><div class="fill" style="width:100%;background:var(--info)"></div></div><span class="num">972</span></div>
+      <div class="bar"><span>机构会员</span><div class="track"><div class="fill" style="width:30%;background:var(--good)"></div></div><span class="num">286</span></div>
+      <div class="bar"><span>理事单位</span><div class="track"><div class="fill" style="width:6%;background:var(--accent)"></div></div><span class="num">18</span></div>
+      <div class="bar"><span>常务理事+</span><div class="track"><div class="fill" style="width:3%;background:var(--gold)"></div></div><span class="num">10</span></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>会员证书 / 机构认证</h3><div class="sp"></div><span class="chip c-warn">18 待续费</span></div><div class="pb">
+      <dl class="kv2"><dt>会员资格证书</dt><dd class="num">1,284 已发</dd><dt>机构认证证书</dt><dd class="num">312 已发</dd><dt>本月到期续费</dt><dd><span class="chip c-warn">18</span></dd><dt>验真中枢</dt><dd>verify.gacee.org</dd></dl>
+      <div style="display:flex;gap:10px;margin-top:12px"><button class="btn" style="flex:1">批量签发会员证书</button><button class="btn ghost">机构认证</button></div>
+    </div></div>
+    <div class="panel"><div class="ph"><h3>会费与续费（本年）</h3></div><div class="pb bars">
+      <div class="bar"><span>已收会费</span><div class="track"><div class="fill" style="width:82%;background:var(--good)"></div></div><span class="num">S$0.62M</span></div>
+      <div class="bar"><span>待续费</span><div class="track"><div class="fill" style="width:24%;background:var(--gold)"></div></div><span class="num">S$0.14M</span></div>
+      <div class="bar"><span>续费率</span><div class="track"><div class="fill" style="width:88%;background:var(--accent)"></div></div><span class="num">88%</span></div>
+    </div></div>
+  </div>
 </section>
 
 <!-- ============================ CHARITY ============================ -->
@@ -1404,6 +1452,7 @@
     <div class="lg"><div class="seal">會</div>GACEE</div>
     <nav class="mnav" id="mnav">
       <a class="on" data-mv="home">首页</a>
+      <a data-mv="member">我的会员</a>
       <a data-mv="market">资源广场</a>
       <a data-mv="enroll">游览研学</a>
       <a data-mv="contest">科技赛事</a>
@@ -1447,6 +1496,43 @@
         <div class="mcard clk" data-mv="mcerts"><div class="ic">🎓</div><h4>我的证书</h4><p>查看与下载贵校师生的协会证书，随时二维码验真。</p></div>
         <div class="mcard clk" data-mv="mmatch"><div class="ic">🤝</div><h4>我的对接</h4><p>管理发起与收到的资源对接申请，双方同意后交换联系方式。</p></div>
       </div>
+    </section>
+    <!-- my membership -->
+    <section class="mview" id="m-member">
+      <div class="phead"><div><h1 style="font-size:22px">我的会员</h1><p>电子会员卡 · 等级与权益 · 会员资格与机构认证证书</p></div><div class="sp"></div><button class="btn ghost">续费 2027</button><button class="btn">申请升级</button></div>
+      <div class="grid g-2">
+        <div class="memcard">
+          <div class="mc-top">
+            <div class="mc-seal"></div>
+            <div><b>GACEE 全球文化教育交流协会</b><span>GLOBAL ASSOCIATION · CULTURE & EDUCATION EXCHANGE</span></div>
+            <span class="mc-badge">理事单位</span>
+          </div>
+          <div class="mc-body">
+            <div class="mc-name">Great Heights School</div>
+            <div class="mc-sub">李校长 · 拉各斯，尼日利亚</div>
+            <div class="mc-row">
+              <div><label>会员编号</label><b>GH-2026-018</b></div>
+              <div><label>会员类别</label><b>认证机构会员</b></div>
+              <div><label>有效期</label><b>2026.01 – 2026.12</b></div>
+            </div>
+          </div>
+          <div class="mc-foot">
+            <svg width="54" height="54" viewBox="0 0 100 100" class="qrm" style="background:#fff;border-radius:6px;padding:4px"></svg>
+            <div class="mc-verify"><span class="chip c-good">✓ 协会认证</span><div>扫码于 verify.gacee.org 验真会员资格</div></div>
+          </div>
+        </div>
+        <div class="panel"><div class="ph"><h3>会员等级 · 升级路径</h3><div class="sp"></div><span class="chip c-acc">当前：理事单位</span></div><div class="pb">
+          <div class="ladder" id="tierLadder"></div>
+          <div style="display:flex;gap:10px;margin-top:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--ink-soft)"><div><b>升级：</b>升至<b>常务理事单位</b>可获旗舰项目<b>承办优先</b>与 <b>2 个理事会席位</b>。<span class="ph link" style="color:var(--accent);cursor:pointer">查看条件 →</span></div></div>
+        </div></div>
+      </div>
+      <div class="sect">会员权益 · 按等级<span class="ln"></span><span class="chip c-mut">✓ 已解锁 / 升级可得更多</span></div>
+      <div class="panel"><div class="tover"><table class="tbl">
+        <thead><tr><th>权益</th><th class="c">个人</th><th class="c">机构</th><th class="c">理事单位</th><th class="c">常务理事+</th></tr></thead>
+        <tbody id="benefitRows"></tbody>
+      </table></div></div>
+      <div class="sect">我的证书 · 会员资格与机构认证<span class="ln"></span><span class="chip c-mut">协会统一发证 · 可验真</span></div>
+      <div class="mgrid" id="memberCertCards"></div>
     </section>
     <!-- market -->
     <section class="mview" id="m-market">
@@ -2077,7 +2163,8 @@
     "会长视角 · 全局纵览":"President · Global overview","项目组合健康度":"Portfolio health","待会长审批":"Awaiting approval","影响力 · 地域":"Reach · region","财务与合规":"Finance & compliance","官方合作":"Official partners",
     "供应与资产":"SUPPLY & ASSETS","合作·采购·结算":"Vendors · P2P","合作单位 · 采购 · 结算":"Vendors · Procurement · Settlement","资产管理":"Assets",
     "采购到付款（P2P）· 全流程留痕":"Procure-to-Pay (P2P) · audit trail","合作单位台账":"Vendor ledger","合同管理":"Contracts","请款与结算（应付）":"Payables","分级授权矩阵":"Authority matrix","应付账龄(AP Aging)":"AP aging","预算执行 · 成本中心":"Budget vs actual · cost centre",
-    "有形资产台账":"Tangible assets","无形资产台账":"Intangible assets","资产结构":"Asset mix","折旧 / 摊销趋势":"Depreciation & amortization","证照续展日历":"Renewal calendar"
+    "有形资产台账":"Tangible assets","无形资产台账":"Intangible assets","资产结构":"Asset mix","折旧 / 摊销趋势":"Depreciation & amortization","证照续展日历":"Renewal calendar",
+    "我的会员":"Membership","会员等级 · 升级路径":"Tiers & upgrade","会员权益 · 按等级":"Benefits by tier","会员等级与权益":"Tiers & benefits","会员构成":"Member mix","会员证书 / 机构认证":"Certificates","会费与续费（本年）":"Dues & renewals"
   };
   var EN=D, ZH={}; for(var k in D){ if(!(D[k] in ZH)) ZH[D[k]]=k; }
   var lang='zh';
@@ -2599,6 +2686,37 @@
         (a[8]==='许可收入'?'<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">对外授权许可（收入）</h3><div class="tover"><table class="tbl"><thead><tr><th>被授权方</th><th>范围</th><th>年费</th><th>状态</th></tr></thead><tbody><tr><td>合作校 A</td><td>非独家 · 教学使用</td><td class="num">S$12k</td><td><span class="chip c-good">生效</span></td></tr><tr><td>合作校 B</td><td>非独家 · 教学使用</td><td class="num">S$12k</td><td><span class="chip c-good">生效</span></td></tr></tbody></table></div>':'')+
         (a[7]==='c-warn'?'<hr class="hr"><div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--ink);line-height:1.6"><b>续展提醒：</b>'+a[5]+'，建议提前 60 日办理续展 / 续费，避免权利中断。</div>':'')+
         '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">新增授权许可</button><button class="btn ghost">续展提醒</button></div>');
+    });});}
+
+  /* ===== 会员权益体系 + 会员证书 ===== */
+  Object.assign(TO,{'续费 2027':'续费申请已提交（演示）','申请升级':'升级申请已提交 · 秘书处将联系','查看条件 →':'打开升级条件（演示）','批量签发会员证书':'已提交批量签发会员证书','机构认证':'机构认证证书已发起签发','保存等级配置':'会员等级配置已保存','＋ 新增权益':'新增权益（演示）','另存为新等级':'已另存为新等级（演示）'});
+
+  var mtiers=[['个人会员','个人教育者 / 志愿者','免费','done'],['机构会员','学校 · 教育文化机构','S$1,200 / 年','done'],['理事单位','深度参与协会治理','S$8,000 / 年','on'],['常务理事单位','旗舰项目承办优先','S$20,000 / 年',''],['副会长单位','战略共建','面议',''],['会长单位','协会最高治理','面议','']];
+  var tl=$('#tierLadder');
+  if(tl){tl.innerHTML=mtiers.map(function(t,i){var st=t[3];var mk=st==='done'?'✓':(st==='on'?'★':(i+1));return '<div class="lv '+st+'"><div class="dot">'+mk+'</div><div><b>'+t[0]+(st==='on'?' · 当前':'')+'</b><span>'+t[1]+'</span></div><div class="fee">'+t[2]+'</div></div>';}).join('');}
+
+  var benefits=[['浏览公开内容 / 报名 / 捐赠','✓','✓','✓','✓'],['发布可对接资源 · 查看联系方式','—','✓','✓','✓'],['资源对接优先推荐 / 敏感资源优先审','—','—','优先','最优先'],['研学 / 活动会员折扣','—','9 折','85 折','8 折'],['内容发布：官网精选位 + 快速复核','—','—','✓','✓'],['旗舰项目资格（校长行名额 / 承办）','—','报名制','保留名额','承办优先'],['「GACEE 认证机构」徽章 · 官网可用','—','✓','✓','✓'],['会员专属报告 / 行业洞察','—','✓','✓','✓'],['年会 / 论坛 VIP · 闭门会','—','—','✓','✓ +主宾'],['治理参与：投票权 / 提案权','—','—','1 席','2+ 席'],['机构专属数据看板','—','—','✓','✓']];
+  var brx=$('#benefitRows');
+  if(brx){var bcell=function(v){var col=v==='✓'?'var(--good)':(v==='—'?'var(--ink-faint)':'var(--gold)');return '<td class="c" style="color:'+col+';font-weight:'+(v==='—'?'400':'700')+'">'+v+'</td>';};
+    brx.innerHTML=benefits.map(function(b){return '<tr><td class="rowhead">'+b[0]+'</td>'+bcell(b[1])+bcell(b[2])+bcell(b[3])+bcell(b[4])+'</tr>';}).join('');}
+
+  var memcerts=[['会员资格证书','认证机构会员 · 理事单位','GACEE-MB-2026-018'],['GACEE 认证机构','Great Heights School · 有效期至 2026-12','GACEE-ORG-2026-018']];
+  var mccx=$('#memberCertCards');
+  if(mccx){mccx.innerHTML=memcerts.map(function(c){return '<div class="mcard"><div style="display:flex;gap:12px;align-items:center"><svg width="52" height="52" viewBox="0 0 100 100" class="qrm" style="background:#fff;border-radius:6px;padding:4px"></svg><div><h4 style="margin:0 0 3px">'+c[0]+'</h4><p style="margin:0">'+c[1]+'</p><div class="num" style="font-size:11px;color:var(--ink-faint);margin-top:3px">'+c[2]+'</div></div></div><div style="display:flex;gap:8px;margin-top:12px"><span class="chip c-good">✓ 有效 · 可验真</span><button class="btn ghost" style="margin-left:auto;padding:6px 12px">下载</button></div></div>';}).join('');}
+  (function(){function mkqr(el){var s='',n=11,c=100/n;for(var y=0;y<n;y++)for(var x=0;x<n;x++){if(Math.random()>0.5)s+='<rect x="'+(x*c)+'" y="'+(y*c)+'" width="'+c+'" height="'+c+'" fill="#141922"/>';}el.innerHTML=s;}$$('#m-member .qrm').forEach(mkqr);})();
+
+  var DISC=['无','9 折','85 折','8 折','8 折','8 折'];
+  var BEN=[['基础参与','投稿(经审)'],['发布对接','认证徽章','9 折','会员报告'],['对接优先','官网精选','承办保留名额','85 折','年会 VIP','1 治理席','数据看板'],['旗舰承办优先','8 折','闭门会主宾','2 治理席','专属定制'],['战略共建','扩大席位'],['最高治理','会长席']];
+  var btiers=[['个人会员','免费','972','基础参与 · 投稿(经审)','—'],['机构会员','S$1,200','286','发布对接 · 认证徽章 · 9 折','—'],['理事单位','S$8,000','18','优先对接 · 承办优先 · 85 折','1 席'],['常务理事单位','S$20,000','6','旗舰承办 · 8 折 · 专属','2 席'],['副会长单位','面议','3','战略共建','扩大'],['会长单位','面议','1','协会最高治理','会长']];
+  var mtr=$('#tierRows');
+  if(mtr){mtr.innerHTML=btiers.map(function(t,i){return '<tr class="clk" data-i="'+i+'"><td class="rowhead">'+t[0]+'</td><td class="num">'+t[1]+'</td><td class="num">'+t[2]+'</td><td class="t2">'+t[3]+'</td><td>'+(t[4]==='—'?'<span class="muted">—</span>':'<span class="chip c-acc">'+t[4]+'</span>')+'</td><td class="t2">配置</td></tr>';}).join('');
+    $$('#tierRows tr').forEach(function(tr){tr.addEventListener('click',function(){var i=+tr.dataset.i,t=btiers[i];
+      openDrawer('会员等级配置 · '+t[0],
+        '<div class="split"><div class="field"><label>年度会费</label><div class="inp"><input value="'+t[1]+'"></div></div><div class="field"><label>研学 / 活动折扣</label><div class="inp"><input value="'+DISC[i]+'"></div></div></div>'+
+        '<div class="split"><div class="field"><label>治理席位</label><div class="inp"><input value="'+t[4]+'"></div></div><div class="field"><label>当前会员数</label><div class="inp"><input value="'+t[2]+'" readonly></div></div></div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">本级权益</h3><div style="display:flex;flex-wrap:wrap;gap:7px">'+BEN[i].map(function(x){return '<span class="chip c-acc">'+x+'</span>';}).join('')+'</div>'+
+        '<hr class="hr"><h3 style="font-family:var(--serif);font-size:15px;margin:0 0 8px">证书与认证</h3><dl class="kv2"><dt>会员资格证书</dt><dd>本级自动签发 · 编号 GACEE-MB-#</dd>'+(i>=1?'<dt>机构认证证书</dt><dd>「GACEE 认证机构」· 编号 GACEE-ORG-#</dd>':'')+'<dt>有效期</dt><dd>随会费年度 · 到期提醒续费</dd></dl>'+
+        '<div style="display:flex;gap:10px;margin-top:14px"><button class="btn" style="flex:1">保存等级配置</button><button class="btn ghost">＋ 新增权益</button><button class="btn ghost">另存为新等级</button></div>');
     });});}
 })();
 </script>
